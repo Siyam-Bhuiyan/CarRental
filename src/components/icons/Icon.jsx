@@ -1,6 +1,9 @@
 import React, { memo } from 'react';
 import Svg, { Path, Rect, Circle } from 'react-native-svg';
-import icons from './iconData';
+import figmaIcons from './iconData';
+import extraIcons from './extraIcons';
+
+const icons = { ...figmaIcons, ...extraIcons };
 
 const TAGS = { path: Path, rect: Rect, circle: Circle };
 

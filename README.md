@@ -9,7 +9,7 @@ Two screens of a ride-booking style car-rental app, built to match the Figma exp
 | My Passengers (segmented tabs, favourites, list) | `/passengers` | `design/My Passengers.svg` |
 
 Stack: **Expo SDK 57**, **expo-router**, **react-native-reanimated**, **react-native-svg**,
-**expo-linear-gradient**, **expo-image**. JavaScript only (no TypeScript).
+**expo-linear-gradient**, **expo-image**, **Zustand**, **Stripe**. JavaScript only (no TypeScript).
 
 ## Run
 
@@ -20,8 +20,8 @@ npm run lint
 npm run format
 ```
 
-The map works in **Expo Go with no API key**. The app opens on the journey screen; tap
-the "2 Passenger" tile or **Manage Journey** to reach the passengers screen.
+The map works in **Expo Go with no API key**. The app opens on the Home screen; the journey
+and passengers screens are reachable from its "Upcoming journey" card and the shortcut tiles.
 
 ## Architecture
 
@@ -103,6 +103,53 @@ call that returns `[{ latitude, longitude }]` and nothing else changes.
 > so I switched to Esri's keyless dark-grey basemap. Public keyless tiles are fine for an
 > assessment but not for heavy production use; in production I would use MapLibre (dev build)
 > with a hosted tile provider and a key.
+
+## Booking flow
+
+Beyond the two assessment screens (Journey, Passengers) the app has a full booking flow:
+
+| Screen | Route | What it does |
+| --- | --- | --- |
+| Home | `/` | Interactive dark map (pan / pinch), nearby cars, "Where to?" sheet, upcoming journey |
+| Plan your ride | `/search` | Pickup / drop-off fields, time presets, suggested places |
+| Choose a ride | `/vehicles` | Real driving route (OSRM), 4 ride categories priced from distance and time |
+| Review & pay | `/checkout` | Route summary, notes, fare breakdown, Stripe payment |
+| Booking confirmed | `/confirmation/[id]` | Animated success state and receipt |
+| My Journeys | `/journeys` | Upcoming / Past tabs |
+
+A paid booking is added to the journeys store and opens in the existing Journey screen.
+
+New code lives in `features/home`, `features/booking`, `features/journeys`, `features/payment`,
+`components/map` (reusable `TileMap`, `MapMarker`, `MapPolyline`) and `store/` (Zustand:
+`bookingStore` for the draft, `journeysStore` for saved journeys).
+
+## Stripe payments (test mode, no backend)
+
+Card payments use Stripe's **PaymentSheet** through `@stripe/stripe-react-native` (works in
+Expo Go; Apple/Google Pay need a dev build).
+
+1. Create a free account at <https://dashboard.stripe.com/register>.
+2. In the dashboard make sure **Test mode / Sandbox** is on, then open
+   **Developers → API keys**.
+3. Copy the **Publishable key** (`pk_test_…`) and reveal the **Secret key** (`sk_test_…`).
+4. Copy `.env.example` to `.env` and paste both keys:
+
+   ```
+   EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+   EXPO_PUBLIC_STRIPE_SECRET_KEY=sk_test_...
+   ```
+
+5. Restart with `npx expo start -c` (Expo inlines `EXPO_PUBLIC_*` variables at bundle time).
+6. At checkout use the test card `4242 4242 4242 4242`, any future expiry and any CVC.
+
+Without keys the app runs in a labelled **demo mode** that simulates a successful payment, so
+the whole flow can still be shown. The web preview always uses demo mode.
+
+> **Security note.** To avoid running a server for this assessment, the app creates the
+> PaymentIntent itself with the test *secret* key (`features/payment/services/stripeApi.js`).
+> A secret key must never ship inside a real app: in production, create the PaymentIntent on a
+> backend (one `POST /payment-intent` endpoint) and give the app only the publishable key and the
+> returned client secret. Only ever use `sk_test_` keys here; `.env` is git-ignored.
 
 ### Notes & trade-offs
 

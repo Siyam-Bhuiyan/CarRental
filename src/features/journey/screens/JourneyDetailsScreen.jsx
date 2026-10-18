@@ -17,7 +17,7 @@ import JourneyTopBar from '../components/JourneyTopBar';
 import NotesSection from '../components/NotesSection';
 import PaymentDetails from '../components/PaymentDetails';
 import PreferenceGrid from '../components/PreferenceGrid';
-import RouteSummary from '../components/RouteSummary';
+import RouteSummary from '@/components/trip/RouteSummary';
 import { SectionHeader } from '@/components/ui';
 
 // Vertical rhythm between blocks, taken from the design (artboard px).

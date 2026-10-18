@@ -10,10 +10,11 @@ export default function useJourney(id) {
   useEffect(() => {
     let active = true;
     Promise.all([getJourney(id), getRoute(id)])
-      .then(([journeyData, routeData]) => {
+      .then(([journeyData, fallbackRoute]) => {
         if (!active) return;
         setJourney(journeyData);
-        setRoute(routeData);
+        // booked journeys carry their own route; the sample data falls back to the mock one
+        setRoute(journeyData.route ?? fallbackRoute);
       })
       .catch((e) => active && setError(e));
     return () => {

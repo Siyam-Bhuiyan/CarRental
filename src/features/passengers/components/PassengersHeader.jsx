@@ -2,8 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, screenPadding } from '@/theme';
-import { AppText, HeaderBackButton, IconButton } from '@/components/ui';
-import SegmentedTabs from './SegmentedTabs';
+import { AppText, HeaderBackButton, IconButton, SegmentedTabs } from '@/components/ui';
 
 const TABS = [
   { value: 'active', label: 'Active' },

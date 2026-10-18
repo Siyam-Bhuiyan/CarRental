@@ -13,3 +13,9 @@ export function formatCurrency(amount) {
 export function roundMoney(amount) {
   return Math.round(amount * 100) / 100;
 }
+
+// percent of an amount, rounded to the cent using integer cents (avoids 3.175 -> 3.17 float
+// surprises, so the checkout, the stored journey and the charge always agree).
+export function percentOf(amount, percent) {
+  return Math.round((Math.round(amount * 100) * percent) / 100) / 100;
+}

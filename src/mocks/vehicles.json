@@ -1,0 +1,50 @@
+[
+  {
+    "id": "economy",
+    "name": "Economy",
+    "tagline": "Compact and affordable",
+    "seats": 4,
+    "bags": 2,
+    "baseFare": 4,
+    "perKm": 1.1,
+    "perMin": 0.25,
+    "etaMin": 3,
+    "image": "pearl"
+  },
+  {
+    "id": "comfort",
+    "name": "Comfort",
+    "tagline": "Newer cars, extra legroom",
+    "seats": 4,
+    "bags": 3,
+    "baseFare": 6,
+    "perKm": 1.5,
+    "perMin": 0.3,
+    "etaMin": 4,
+    "image": "blue"
+  },
+  {
+    "id": "suv",
+    "name": "SUV",
+    "tagline": "Room for the whole group",
+    "seats": 6,
+    "bags": 4,
+    "baseFare": 9,
+    "perKm": 1.9,
+    "perMin": 0.35,
+    "etaMin": 6,
+    "image": "graphite"
+  },
+  {
+    "id": "premium",
+    "name": "Premium",
+    "tagline": "Top-rated chauffeurs",
+    "seats": 4,
+    "bags": 3,
+    "baseFare": 14,
+    "perKm": 2.6,
+    "perMin": 0.5,
+    "etaMin": 8,
+    "image": "red"
+  }
+]

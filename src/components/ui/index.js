@@ -5,5 +5,7 @@ export { default as Divider } from './Divider';
 export { default as HeaderBackButton } from './HeaderBackButton';
 export { default as IconButton } from './IconButton';
 export { default as PressableScale } from './PressableScale';
+export { default as PrimaryButton } from './PrimaryButton';
 export { default as SectionHeader } from './SectionHeader';
+export { default as SegmentedTabs } from './SegmentedTabs';
 export { default as Skeleton } from './Skeleton';
