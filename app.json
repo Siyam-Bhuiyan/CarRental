@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Car Rental",
+    "slug": "car-rental",
+    "scheme": "carrental",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#030303",
+    "ios": { "supportsTablet": false },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#030303",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": { "favicon": "./assets/favicon.png", "bundler": "metro" },
+    "plugins": ["expo-router", "expo-font"],
+    "experiments": { "typedRoutes": false }
+  }
+}

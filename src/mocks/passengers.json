@@ -1,0 +1,106 @@
+[
+  {
+    "id": "1",
+    "name": "Ethan Lawson",
+    "phone": "(303) 555-0123",
+    "avatar": "default",
+    "favorite": true,
+    "archived": false
+  },
+  {
+    "id": "2",
+    "name": "Emily Johnson",
+    "phone": "(404) 555-0162",
+    "avatar": "emily",
+    "favorite": true,
+    "archived": false
+  },
+  {
+    "id": "3",
+    "name": "Noah Smith",
+    "phone": "(720) 555-0185",
+    "avatar": "noah",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "4",
+    "name": "Lucas Davis",
+    "phone": "(720) 555-0150",
+    "avatar": "lucas",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "5",
+    "name": "Mason Wilson",
+    "phone": "(720) 555-0145",
+    "avatar": "default",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "6",
+    "name": "Logan Taylor",
+    "phone": "(720) 555-0132",
+    "avatar": "logan",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "7",
+    "name": "James Anderson",
+    "phone": "(720) 555-0129",
+    "avatar": "default",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "8",
+    "name": "Aiden Thomas",
+    "phone": "(720) 555-0116",
+    "avatar": "aiden",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "9",
+    "name": "James Anderson",
+    "phone": "(720) 555-0129",
+    "avatar": "default",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "10",
+    "name": "Aiden Thomas",
+    "phone": "(720) 555-0116",
+    "avatar": "aiden",
+    "favorite": false,
+    "archived": false
+  },
+  {
+    "id": "11",
+    "name": "Olivia Brown",
+    "phone": "(305) 555-0177",
+    "avatar": "default",
+    "favorite": false,
+    "archived": true
+  },
+  {
+    "id": "12",
+    "name": "Sophia Martinez",
+    "phone": "(305) 555-0104",
+    "avatar": "emily",
+    "favorite": false,
+    "archived": true
+  },
+  {
+    "id": "13",
+    "name": "Liam Walker",
+    "phone": "(786) 555-0138",
+    "avatar": "lucas",
+    "favorite": false,
+    "archived": true
+  }
+]

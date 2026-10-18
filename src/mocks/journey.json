@@ -1,0 +1,43 @@
+{
+  "id": "LGA202154",
+  "type": "Point to Point",
+  "status": "BOOKED",
+  "scheduledAt": "2025-06-27T08:30:00",
+  "origin": {
+    "title": "Malaga Ave",
+    "address": "1116 Malaga Ave, Coral Gables, FL 33134",
+    "coordinate": {
+      "latitude": 25.7469,
+      "longitude": -80.2711
+    }
+  },
+  "destination": {
+    "title": "Miami Beach",
+    "address": "2100 NW 42nd Ave, Miami, FL 33142",
+    "coordinate": {
+      "latitude": 25.7907,
+      "longitude": -80.13
+    }
+  },
+  "preferences": {
+    "passengers": 2,
+    "carryOnBags": 2,
+    "largeBags": 1,
+    "childSeat": "1 x Booster",
+    "accessibleVehicle": "Yes",
+    "petFriendly": "No Need"
+  },
+  "chauffeur": null,
+  "notes": "Meet me at the main entrance with two passengers, one carry-on, and a large suitcase. Call me when you arrive.",
+  "payment": {
+    "status": "UNPAID",
+    "baseFare": 484.71,
+    "discountPercent": 20,
+    "card": {
+      "brand": "visa",
+      "last4": "4242",
+      "expiry": "12/26",
+      "status": "Active"
+    }
+  }
+}
