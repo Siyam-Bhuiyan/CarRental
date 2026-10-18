@@ -19,6 +19,7 @@ export default function RouteMap({
     <TileMap
       style={style}
       interactive={false}
+      showLabels={false}
       fitCoordinates={route}
       fitPadding={padding}
     >

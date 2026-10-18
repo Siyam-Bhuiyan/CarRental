@@ -49,10 +49,13 @@ function seedCars(center) {
 
 // Mock "drivers nearby": cars drift along their heading and turn back toward the centre
 // when they wander too far. Replace with a realtime feed in production.
-export default function useNearbyCars(center) {
+export const NEARBY_CAR_COUNT = IMAGES.length;
+
+export default function useNearbyCars(center, active = true) {
   const [cars, setCars] = useState(() => seedCars(center));
 
   useEffect(() => {
+    if (!active) return undefined; // paused while another screen is on top
     const id = setInterval(() => {
       setCars((list) =>
         list.map((car, i) => {
@@ -77,7 +80,7 @@ export default function useNearbyCars(center) {
       );
     }, TICK_MS);
     return () => clearInterval(id);
-  }, [center]);
+  }, [center, active]);
 
   return cars;
 }

@@ -34,7 +34,7 @@ const GAP = {
 function Section({ index, style, children }) {
   return (
     <Animated.View
-      entering={FadeInDown.delay(80 + index * 70).duration(380)}
+      entering={FadeInDown.delay(30 + index * 40).duration(280)}
       style={style}
     >
       {children}

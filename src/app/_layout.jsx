@@ -32,6 +32,7 @@ export default function RootLayout() {
           <Stack
             screenOptions={{
               headerShown: false,
+              freezeOnBlur: true, // covered screens stop re-rendering
               animation: 'slide_from_right',
               contentStyle: { backgroundColor: colors.background },
             }}

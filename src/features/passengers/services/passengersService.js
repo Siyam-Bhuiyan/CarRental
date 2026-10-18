@@ -2,7 +2,6 @@ import passengersMock from '@/mocks/passengers.json';
 import { delay } from '@/utils/delay';
 
 export async function getPassengers() {
-  await delay(550);
   return passengersMock;
 }
 

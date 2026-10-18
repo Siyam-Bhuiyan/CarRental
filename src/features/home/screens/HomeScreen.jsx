@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Alert, StyleSheet, View } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { colors } from '@/theme';
 import Icon from '@/components/icons/Icon';
 import { TileMap } from '@/components/map';
@@ -15,7 +15,7 @@ import BookingPanel from '../components/BookingPanel';
 import HomeTopBar from '../components/HomeTopBar';
 import NearbyCars from '../components/NearbyCars';
 import UserLocationMarker from '../components/UserLocationMarker';
-import useNearbyCars from '../hooks/useNearbyCars';
+import { NEARBY_CAR_COUNT } from '../hooks/useNearbyCars';
 
 const QUICK_PLACES = placesMock.slice(0, 5);
 
@@ -23,7 +23,15 @@ export default function HomeScreen() {
   const router = useRouter();
   const mapRef = useRef(null);
   const [panelHeight, setPanelHeight] = useState(0);
-  const cars = useNearbyCars(DEMO_USER_LOCATION);
+  const [focused, setFocused] = useState(true);
+
+  // stop the car simulation while another screen is open on top of Home
+  useFocusEffect(
+    useCallback(() => {
+      setFocused(true);
+      return () => setFocused(false);
+    }, []),
+  );
 
   const journeys = useJourneysStore((s) => s.journeys);
   const upcoming = useMemo(
@@ -64,7 +72,7 @@ export default function HomeScreen() {
         focusOffset={focusOffset}
       >
         <UserLocationMarker coordinate={DEMO_USER_LOCATION} />
-        <NearbyCars cars={cars} />
+        <NearbyCars center={DEMO_USER_LOCATION} active={focused} />
       </TileMap>
 
       <HomeTopBar
@@ -81,7 +89,7 @@ export default function HomeScreen() {
           <View style={styles.nearby}>
             <View style={styles.liveDot} />
             <AppText variant="chip" color={colors.textSecondary}>
-              {cars.length} cars nearby
+              {NEARBY_CAR_COUNT} cars nearby
             </AppText>
           </View>
           <PressableScale

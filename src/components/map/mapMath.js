@@ -1,4 +1,4 @@
-import { DARK_TILE_URL, TILE_MAX_ZOOM } from '@/config/map';
+import { DARK_TILE_URL, LABEL_TILE_URL, TILE_MAX_ZOOM } from '@/config/map';
 
 // Web Mercator helpers shared by the map components. A "unit" point is a position on the
 // whole world mapped to a 0..1 square, which keeps zoom arithmetic trivial.
@@ -55,13 +55,22 @@ export function fitView(coordinates, size, padding = {}) {
   };
 }
 
-export const tileUrl = (z, x, y) =>
-  DARK_TILE_URL.replace('{z}', z).replace('{x}', x).replace('{y}', y);
+const fill = (template, z, x, y) =>
+  template.replace('{z}', z).replace('{x}', x).replace('{y}', y);
+
+export const tileUrl = (z, x, y) => fill(DARK_TILE_URL, z, x, y);
+export const labelUrl = (z, x, y) => fill(LABEL_TILE_URL, z, x, y);
 
 // Tiles that cover the viewport (plus `buffer` px on every side so panning has no blank edge).
-export function visibleTiles(view, size, offset, buffer = TILE) {
+// `boost` fetches tiles that many zoom levels deeper (they are drawn proportionally smaller).
+export function visibleTiles(
+  view,
+  size,
+  offset,
+  { buffer = TILE / 2, boost = 0, url = tileUrl } = {},
+) {
   const world = worldSize(view.zoom);
-  const z = Math.max(0, Math.min(Math.floor(view.zoom), TILE_MAX_ZOOM));
+  const z = Math.max(0, Math.min(Math.floor(view.zoom) + boost, TILE_MAX_ZOOM));
   const n = 2 ** z;
   const tileSize = world / n;
   const ox = size.width / 2 + offset.x;
@@ -78,7 +87,7 @@ export function visibleTiles(view, size, offset, buffer = TILE) {
       if (i < 0 || j < 0 || i >= n || j >= n) continue;
       tiles.push({
         key: `${z}/${i}/${j}`,
-        uri: tileUrl(z, i, j),
+        uri: url(z, i, j),
         left: (i / n - view.cx) * world + ox,
         top: (j / n - view.cy) * world + oy,
       });

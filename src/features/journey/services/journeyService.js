@@ -4,7 +4,6 @@ import { useJourneysStore } from '@/store/journeysStore';
 
 // Swap the body of these functions for real HTTP calls; the UI only sees the returned shape.
 export async function getJourney(id) {
-  await delay(650);
   const { journeys } = useJourneysStore.getState();
   // The mock backend falls back to the first journey for unknown ids.
   const journey = journeys.find((j) => j.id === id) ?? journeys[0];

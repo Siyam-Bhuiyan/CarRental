@@ -11,12 +11,14 @@ import { Image, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { scheduleOnRN } from 'react-native-worklets';
+import { BASE_DETAIL_BOOST } from '@/config/map';
 import { MapContext } from './MapContext';
 import {
   TILE,
   clampZoom,
   fitView,
   fromUnit,
+  labelUrl,
   toUnit,
   visibleTiles,
   worldSize,
@@ -43,6 +45,7 @@ const TileMap = forwardRef(function TileMap(
     fitPadding,
     focusOffset = NO_OFFSET,
     interactive = true,
+    showLabels = true,
     onViewChange,
     style,
     children,
@@ -155,28 +158,39 @@ const TileMap = forwardRef(function TileMap(
     [project, view.zoom, size],
   );
 
-  const layout = useMemo(
-    () =>
-      size.width ? visibleTiles(view, size, focusOffset) : { tiles: [], tileSize: TILE },
-    [view, size, focusOffset],
-  );
+  const layout = useMemo(() => {
+    if (!size.width)
+      return {
+        base: { tiles: [], tileSize: TILE },
+        labels: { tiles: [], tileSize: TILE },
+      };
+    const buffer = interactive ? TILE / 2 : 0;
+    return {
+      base: visibleTiles(view, size, focusOffset, { buffer, boost: BASE_DETAIL_BOOST }),
+      labels: showLabels
+        ? visibleTiles(view, size, focusOffset, { buffer, url: labelUrl })
+        : { tiles: [], tileSize: TILE },
+    };
+  }, [view, size, focusOffset, interactive, showLabels]);
 
   const content = (
     <Animated.View style={[StyleSheet.absoluteFill, animatedStyle]}>
-      {layout.tiles.map((tile) => (
-        <Image
-          key={tile.key}
-          source={{ uri: tile.uri }}
-          fadeDuration={0}
-          style={{
-            position: 'absolute',
-            left: tile.left,
-            top: tile.top,
-            width: layout.tileSize + 0.5,
-            height: layout.tileSize + 0.5,
-          }}
-        />
-      ))}
+      {[layout.base, layout.labels].map((layer, layerIndex) =>
+        layer.tiles.map((tile) => (
+          <Image
+            key={`${layerIndex}-${tile.key}`}
+            source={{ uri: tile.uri }}
+            fadeDuration={0}
+            style={{
+              position: 'absolute',
+              left: tile.left,
+              top: tile.top,
+              width: layer.tileSize + 0.5,
+              height: layer.tileSize + 0.5,
+            }}
+          />
+        )),
+      )}
       <MapContext.Provider value={ctx}>
         {size.width ? children : null}
       </MapContext.Provider>
