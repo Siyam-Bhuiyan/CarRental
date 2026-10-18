@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import Animated, { FadeInDown, LinearTransition } from 'react-native-reanimated';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useRouter } from 'expo-router';
 import { colors, screenPadding } from '@/theme';
 import { getCarImage } from '@/assets/images/cars';
@@ -82,7 +82,6 @@ export default function JourneysScreen() {
           renderItem={({ item, index }) => (
             <Animated.View
               entering={FadeInDown.delay(Math.min(index, 8) * 50).duration(320)}
-              layout={LinearTransition}
             >
               <JourneyCard
                 journey={item}

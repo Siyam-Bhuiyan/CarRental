@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { screenPadding } from '@/theme';
 import { ScreenContainer } from '@/components/layout';
+import useAfterTransition from '@/hooks/useAfterTransition';
 import { ROUTES } from '@/constants/routes';
 import useJourney from '../hooks/useJourney';
 import { cancelJourney } from '../services/journeyService';
@@ -46,6 +47,9 @@ export default function JourneyDetailsScreen({ id }) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { journey, route, loading } = useJourney(id);
+  // heavy content (map, sections) waits for the slide-in to finish
+  const ready = useAfterTransition();
+  const showContent = ready && !loading && Boolean(journey);
 
   const goBack = useCallback(() => {
     if (router.canGoBack()) router.back();
@@ -74,9 +78,9 @@ export default function JourneyDetailsScreen({ id }) {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: bottomSpace }}
-        scrollEnabled={!loading}
+        scrollEnabled={showContent}
       >
-        {loading || !journey ? (
+        {!showContent ? (
           <JourneySkeleton />
         ) : (
           <>
@@ -122,7 +126,7 @@ export default function JourneyDetailsScreen({ id }) {
         )}
       </ScrollView>
       <JourneyTopBar onBack={goBack} />
-      {!loading && <ActionBar onCancel={confirmCancel} onManage={openPassengers} />}
+      {showContent && <ActionBar onCancel={confirmCancel} onManage={openPassengers} />}
     </ScreenContainer>
   );
 }

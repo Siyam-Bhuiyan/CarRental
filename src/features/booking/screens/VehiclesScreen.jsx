@@ -4,6 +4,7 @@ import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { colors, screenPadding } from '@/theme';
 import { ScreenContainer } from '@/components/layout';
+import useAfterTransition from '@/hooks/useAfterTransition';
 import { AppText, IconButton, PrimaryButton, Skeleton } from '@/components/ui';
 import { ROUTES } from '@/constants/routes';
 import vehiclesMock from '@/mocks/vehicles.json';
@@ -22,6 +23,7 @@ export default function VehiclesScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { pickup, dropoff, plan, loading } = useRoutePlan();
+  const ready = useAfterTransition(); // mount the map after the slide-in
   const vehicleId = useBookingStore((s) => s.vehicleId);
   const setVehicle = useBookingStore((s) => s.setVehicle);
 
@@ -57,13 +59,15 @@ export default function VehiclesScreen() {
   return (
     <ScreenContainer>
       <View style={{ height: MAP_HEIGHT }}>
-        <RouteMap
-          route={route}
-          origin={pickup.coordinate}
-          destination={dropoff.coordinate}
-          padding={MAP_PADDING}
-          style={StyleSheet.absoluteFill}
-        />
+        {ready && (
+          <RouteMap
+            route={route}
+            origin={pickup.coordinate}
+            destination={dropoff.coordinate}
+            padding={MAP_PADDING}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
         <View style={[styles.back, { top: insets.top + 8 }]}>
           <IconButton icon="arrowLeft" accessibilityLabel="Go back" onPress={goBack} />
         </View>
