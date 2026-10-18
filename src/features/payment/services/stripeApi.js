@@ -27,7 +27,10 @@ export function createPaymentIntent({ amountCents, description, metadata = {} })
     amount: amountCents,
     currency: CURRENCY,
     description,
-    'payment_method_types[]': 'card',
+    // Stripe no longer accepts `payment_method_types`; methods come from the Dashboard
+    // settings. `allow_redirects: never` keeps PaymentSheet to in-app methods (cards, wallets).
+    'automatic_payment_methods[enabled]': 'true',
+    'automatic_payment_methods[allow_redirects]': 'never',
   };
   Object.entries(metadata).forEach(([k, v]) => {
     body[`metadata[${k}]`] = v;
